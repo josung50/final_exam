@@ -21,14 +21,16 @@
             android:layout_width="wrap_content"
             android:id="@+id/btn_getLocation"
             android:layout_weight="1"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:onClick="getLocation"/>
 
         <Button
             android:text="Sensors"
             android:layout_width="wrap_content"
             android:id="@+id/btn_getSensors"
             android:layout_weight="1"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:onClick="gsensor"/>
 
     </LinearLayout>
 
@@ -77,6 +79,7 @@
         android:text="Send SMS"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/btn_sendMessage" />
+        android:id="@+id/btn_sendMessage"
+        android:onClick="sendMessage"/>
 
 </LinearLayout>

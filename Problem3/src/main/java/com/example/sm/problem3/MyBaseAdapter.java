@@ -42,10 +42,7 @@ public class MyBaseAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         // need something here
-
-        return itemLayout;
-
+        return convertView;
     }
 }

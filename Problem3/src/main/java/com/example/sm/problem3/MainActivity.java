@@ -2,7 +2,10 @@ package com.example.sm.problem3;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,35 +13,39 @@ import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
+    final DB db = new DB(this,"list2.db",null,1);
+    static TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<CustomerThread> list = new ArrayList<CustomerThread>();
-        Manager manager = new Manager();
+        textView = (TextView) findViewById(R.id.textView);
+        //ArrayList<CustomerThread> list = new ArrayList<CustomerThread>();
+        //Manager manager = new Manager();
 
         for(int i = 0 ; i < 10 ; i++){
             Customer customer = new Customer("Customer" + i);
             CustomerThread ct = new CustomerThread(customer);
-            list.add(ct);
-            manager.add_customer(customer);
-            ct.start();
+            //list.add(ct);
+            //manager.add_customer(customer);
+            ct.run();
         }
 
 
-        for(CustomerThread ct : list){
+
+        /*for(CustomerThread ct : list){
 
             try {
-                // need something here
+
             } catch (InterruptedException e) { }
-        }
+        }*/
 
-        manager.sort();
+        //manager.sort();
 
-        MyBaseAdapter adapter = new MyBaseAdapter(this, manager.list);
-        ListView listview = (ListView) findViewById(R.id.listView1) ;
-        listview.setAdapter(adapter);
+        //MyBaseAdapter adapter = new MyBaseAdapter(this, manager.list);
+        //ListView listview = (ListView) findViewById(R.id.listView1) ;
+        //listview.setAdapter(adapter);
 
 
     }
@@ -50,6 +57,21 @@ class CustomerThread extends Thread{
 
     CustomerThread(Customer customer){
         this.customer = customer;
+    }
+
+    @Override
+    public void run() {
+        try {
+            customer.work();
+            Log.d("일" , "->" + customer.name + " " + customer.spent_money + " " );
+            /*if(customer.spent_money == 10) {
+                stop();
+            }*/
+            sleep(1);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     // need something here
 }
@@ -70,14 +92,21 @@ class Customer extends Person{
         this.name = name;
     }
 
+    @Override
+    void work() {
+        int temp = (int)((Math.random())*1000);
+        money -= temp;
+        spent_money ++;
+
+    }
     // need something here
 }
 
 
 class Manager extends Person{
-    ArrayList <Customer> list = new ArrayList<Customer>();
+   // ArrayList <Customer> list = new ArrayList<Customer>();
 
-    void add_customer(Customer customer) {
+    /*void add_customer(Customer customer) {
         list.add(customer);
     }
 
@@ -86,10 +115,10 @@ class Manager extends Person{
         // need something here
 
     }
-
+*/
     @Override
     void work() {
-        sort();
+        //sort();
     }
 }
 
